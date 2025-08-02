@@ -1,61 +1,41 @@
 package com.example.chientx_apero
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.chientx_apero.ui.theme.ChientxAperoTheme
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.example.chientx_apero.navigation.Navigation
+import com.example.chientx_apero.playlist_screen.getAllMp3Files
+import com.example.chientx_apero.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            getAllMp3Files(this)
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_MEDIA_AUDIO),
+                1
+            )
+        }
+
         enableEdgeToEdge()
         setContent {
-            ChientxAperoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Kotlin",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+            AppTheme {
+                Navigation()
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Column {
-        var name by remember{ mutableStateOf("") }
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Name: $name")}
-        )
-    }
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ChientxAperoTheme {
-        Greeting("Android")
     }
 }
