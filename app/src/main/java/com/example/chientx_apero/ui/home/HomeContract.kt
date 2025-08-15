@@ -12,7 +12,7 @@ data class HomeState(
     val topArtists: List<ArtistRetrofit>? = null,
     val topTracks: List<TrackRetrofit>? = null,
     val topAlbums: List<AlbumRetrofit>? = null,
-    val isOffline: Boolean = false
+    val isOffline: Boolean = true
 )
 
 sealed interface HomeIntent {

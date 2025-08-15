@@ -64,7 +64,7 @@ fun ButtonAction(
                     imageVector = ImageVector.Companion.vectorResource(id = R.drawable.logout),
                     contentDescription = null,
                     modifier = Modifier.Companion
-                        .size(24.dp),
+                        .size(18.dp),
                     tint = MaterialTheme.colorScheme.errorContainer
                 )
                 Text(

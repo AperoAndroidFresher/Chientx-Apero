@@ -155,7 +155,7 @@ fun InformationScreen(
                     placeholder = stringResource(R.string.enter_a_description_about_yourself),
                     modifier = Modifier
                         .fillMaxWidth(),
-                    size = 200.dp,
+                    size = 120.dp,
                     value = describe,
                     onValueChange = {
                         describe = it

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -73,13 +74,16 @@ fun ItemLibrary(
             ) {
                 Text(
                     text = song.name,
+                    maxLines = 1,
                     color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Companion.Bold,
                     modifier = Modifier.Companion.padding(bottom = 4.dp)
+                            .width(160.dp),
                 )
                 Text(
                     text = song.artist,
+                    maxLines = 1,
                     fontWeight = FontWeight.Companion.Bold,
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.secondary

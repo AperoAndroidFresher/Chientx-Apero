@@ -75,17 +75,17 @@ fun HomeScreen(
         Box(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
-                .padding(vertical = 18.dp)
+                .padding(bottom = 18.dp, top = 30.dp)
                 .fillMaxSize()
         ) {
             Column(
-                modifier = Modifier
-                    .padding(horizontal = 10.dp)
             ) {
                 HeaderHome(
                     onClickProfile = onClickProfile,
                     onClickSettings = onClickSettings,
-                    user = AppCache.currentUser
+                    user = AppCache.currentUser,
+                    modifier = Modifier
+                        .padding(top = 12.dp)
                 )
                 Ranking()
                 if (!state.isOffline) {

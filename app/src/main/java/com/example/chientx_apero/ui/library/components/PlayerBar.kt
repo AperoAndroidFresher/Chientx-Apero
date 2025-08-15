@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -36,7 +37,7 @@ fun PlayerBar(
     onClickStopSong: () -> Unit = {},
     onClickPlayer: () -> Unit = {},
     isPlaySong: Boolean = false,
-    currentTime: Float = 0f
+    currentTime: Float = 0f,
 ) {
     Column(
         horizontalAlignment = Alignment.End
@@ -96,6 +97,8 @@ fun PlayerBar(
                     )
                     Text(
                         text = song.name,
+                        maxLines = 1,
+                        modifier = Modifier.width(200.dp),
                         color = MaterialTheme.colorScheme.onBackground,
                         fontWeight = FontWeight.Companion.Bold,
                         fontSize = 20.sp
