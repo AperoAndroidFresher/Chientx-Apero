@@ -62,7 +62,6 @@ class MusicService : LifecycleService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-
         when (intent?.action) {
             ACTION_PLAY -> {
                 val uri = Uri.fromFile(File(intent.getStringExtra("uri")!!))

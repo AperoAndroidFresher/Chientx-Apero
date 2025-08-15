@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -26,9 +27,15 @@ import com.example.chientx_apero.ui.home.components.Ranking
 import com.example.chientx_apero.ui.home.components.TopAlbums
 import com.example.chientx_apero.ui.home.components.TopArtists
 import com.example.chientx_apero.ui.home.components.TopTracks
+import com.example.chientx_apero.ui.library.LibraryIntent
+import com.example.chientx_apero.ui.library.components.NoInternetScreen
 import com.example.chientx_apero.ui.player_bar.PlayerBarScreen
 import com.example.chientx_apero.ui.player_bar.PlayerBarViewModel
 import com.example.chientx_apero.ui.theme.darkTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -81,28 +88,44 @@ fun HomeScreen(
                     user = AppCache.currentUser
                 )
                 Ranking()
-                TopAlbums(
-                    albums = state.topAlbums?.take(6) ?: emptyList(),
-                    onClickTopAlbums = {
-                        AppCache.topAlbums = state.topAlbums
-                        onClickTopAlbums()
+                if (!state.isOffline) {
+                    Box(
+                        modifier = Modifier.weight(1f)
+                            .fillMaxWidth()
+                    ){
+                        NoInternetScreen(
+                            onClickTryAgain = {
+                                viewModel.processIntent(
+                                    HomeIntent.LoadData, context
+                                )
+                            },
+                            modifier = Modifier.align(Alignment.Center)
+                        )
                     }
-                )
-                TopTracks(
-                    tracks = state.topTracks?.take(5) ?: emptyList(),
-                    itemColors = itemColors,
-                    onClickTopTracks = {
-                        AppCache.topTracks = state.topTracks
-                        onClickTopTracks()
-                    }
-                )
-                TopArtists(
-                    artists = state.topArtists?.take(5) ?: emptyList(),
-                    onClickTopArtists = {
-                        AppCache.topArtists = state.topArtists
-                        onClickTopArtists()
-                    }
-                )
+                } else {
+                    TopAlbums(
+                        albums = state.topAlbums?.take(6) ?: emptyList(),
+                        onClickTopAlbums = {
+                            AppCache.topAlbums = state.topAlbums
+                            onClickTopAlbums()
+                        }
+                    )
+                    TopTracks(
+                        tracks = state.topTracks?.take(5) ?: emptyList(),
+                        itemColors = itemColors,
+                        onClickTopTracks = {
+                            AppCache.topTracks = state.topTracks
+                            onClickTopTracks()
+                        }
+                    )
+                    TopArtists(
+                        artists = state.topArtists?.take(5) ?: emptyList(),
+                        onClickTopArtists = {
+                            AppCache.topArtists = state.topArtists
+                            onClickTopArtists()
+                        }
+                    )
+                }
             }
             Column(
                 modifier = Modifier

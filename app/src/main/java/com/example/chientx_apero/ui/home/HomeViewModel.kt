@@ -60,7 +60,8 @@ class HomeViewModel() : ViewModel() {
                     viewModelScope.launch(Dispatchers.IO) {
                         _state.update {
                             it.copy(
-                                topArtists = topArtists
+                                topArtists = topArtists,
+                                isOffline = true
                             )
                         }
                     }
@@ -71,6 +72,11 @@ class HomeViewModel() : ViewModel() {
                 call: Call<TopArtistsResponse>,
                 t: Throwable,
             ) {
+                _state.update {
+                    it.copy(
+                        isOffline = false
+                    )
+                }
             }
         })
     }
@@ -87,7 +93,8 @@ class HomeViewModel() : ViewModel() {
                     viewModelScope.launch(Dispatchers.IO) {
                         _state.update {
                             it.copy(
-                                topAlbums = topAlbums
+                                topAlbums = topAlbums,
+                                isOffline = true
                             )
                         }
                     }
@@ -98,7 +105,11 @@ class HomeViewModel() : ViewModel() {
                 call: Call<TopAlbumsResponse>,
                 t: Throwable,
             ) {
-                Log.d("TopAlbums", "onFailure: $t")
+                _state.update {
+                    it.copy(
+                        isOffline = false
+                    )
+                }
             }
         })
     }
@@ -116,7 +127,8 @@ class HomeViewModel() : ViewModel() {
                     viewModelScope.launch(Dispatchers.IO) {
                         _state.update {
                             it.copy(
-                                topTracks = topTracks
+                                topTracks = topTracks,
+                                isOffline = true
                             )
                         }
                     }
@@ -127,7 +139,11 @@ class HomeViewModel() : ViewModel() {
                 call: Call<TopTracksResponse>,
                 t: Throwable,
             ) {
-                Log.d("TopTracks", "$t")
+                _state.update {
+                    it.copy(
+                        isOffline = false
+                    )
+                }
             }
         })
     }
